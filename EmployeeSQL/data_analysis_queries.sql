@@ -1,10 +1,3 @@
-SELECT * FROM employees limit 0;
-SELECT * FROM departments limit 0;
-SELECT * FROM titles limit 0;
-SELECT * FROM salaries limit 0;
-SELECT * FROM dept_manager limit 0;
-SELECT * FROM dept_emp limit 0;
-
 --List the employee number, last name, first name, sex, and salary of each employee
 SELECT employees.emp_no, last_name, first_name, sex, salary
 FROM employees
@@ -41,12 +34,29 @@ WHERE 1=1
 	AND first_name ='Hercules'
 	AND last_name LIKE 'B%';
 
---List each employee in the Sales department, including their employee number, last name, and first name (2 points)
+--List each employee in the Sales department, including their employee number, last name, and first name
+SELECT dept_emp.emp_no, employees.last_name, employees.first_name
+FROM dept_emp
+LEFT JOIN departments
+ON dept_emp.dept_no = departments.dept_no
+LEFT JOIN employees
+ON dept_emp.emp_no = employees.emp_no
+WHERE 1=1
+	AND dept_name = 'Sales';
 
+--List each employee in the Sales and Development departments, including their employee number, last name, first name, and department name
+SELECT dept_emp.emp_no, employees.last_name, employees.first_name, departments.dept_name
+FROM dept_emp
+LEFT JOIN departments
+ON dept_emp.dept_no = departments.dept_no
+LEFT JOIN employees
+ON dept_emp.emp_no = employees.emp_no
+WHERE 1=1
+	AND dept_name = 'Sales'
+	OR dept_name = 'Development';
 
-
---List each employee in the Sales and Development departments, including their employee number, last name, first name, and department name (4 points)
-
-
-
---List the frequency counts, in descending order, of all the employee last names (that is, how many employees share each last name) (4 points)
+--List the frequency counts, in descending order, of all the employee last names (that is, how many employees share each last name)
+SELECT last_name, count(emp_no)
+FROM employees
+GROUP BY last_name
+ORDER BY count(emp_no) desc;
