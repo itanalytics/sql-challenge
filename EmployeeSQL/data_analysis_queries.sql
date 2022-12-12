@@ -1,9 +1,8 @@
 --List the employee number, last name, first name, sex, and salary of each employee
-SELECT employees.emp_no, last_name, first_name, sex, salary
+SELECT employees.emp_no, employees.last_name, employees.first_name, employees.sex, salaries.salary
 FROM employees
 LEFT JOIN salaries
-ON employees.emp_no = salaries.emp_no
-LIMIT 10;
+ON employees.emp_no = salaries.emp_no;
 
 --List the first name, last name, and hire date for the employees who were hired in 1986
 SELECT first_name, last_name, hire_date
